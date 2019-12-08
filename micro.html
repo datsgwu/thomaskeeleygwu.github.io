@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ICEWS</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="https://www.gstatic.com/charts/loader.js"></script>
+	<script>
+		google.charts.load('current', {'packages':['corechart', 'geochart']});
+		google.charts.setOnLoadCallback(drawAllSheets);
+		
+		function drawAllSheets() {
+			drawSheetName('year_count', 'SELECT A, B',
+							totalResponseHandler);
+			drawSheetName('country_count', 'SELECT A, B',
+							countryResponseHandler);
+			drawSheetName('pub_count', 'SELECT A, B',
+							pubResponseHandler);
+			drawSheetName('month_int', 'SELECT A, B, C, D, E, F, G, H',
+							monthResponseHandler);
+			drawSheetName('apr_17', 'SELECT A, B',
+							aprResponseHandler);
+	
+		} // draw all sheets
+		
+		function drawSheetName(sheetName, query, responseHandler) {
+			var queryString = encodeURIComponent(query);
+			var query = new google.visualization.Query(
+				'https://docs.google.com/spreadsheets/d/1BfSK5COFiZojepM7cnbIWFZntYqbWUMvaIlQFh3zbRk/gviz/tq?sheet=' + sheetName + '&headers=1&tq=' +queryString  
+			);
+			
+			query.send(responseHandler);
+		} //drawSheetName
+		
+		function totalResponseHandler(response){
+			//get the data
+			var data = response.getDataTable();
+			
+			// set the options
+			var options = {
+					height: 600,
+					vAxis: {title: 'Media Report Count'},
+					hAxis: {title: 'Year'},
+					backgroundColor: {
+							fill: '#ffffff',
+							fillOpacity: 0.75
+						},
+					colors: ['#0e4520']
+				
+			}; //options
+					
+			//create the chart and draw it
+			var chart = new google.visualization.ColumnChart(document.getElementById('total_div'));
+			chart.draw(data, options);
+		
+		} //totalResponseHandler
+		
+		function countryResponseHandler(response){
+			//get the data
+			var data = response.getDataTable();
+			
+			//set the options
+			var options = {
+					height: 600,
+					colorAxis: {colors: ['#0e4520', '#caeace']},
+					backgroundColor: {
+							fill: '#ffffff',
+							fillOpacity: 0.75
+						},
+					title: 'Media Reports by Target Country'
+			}; //options
+			
+			//creat the chart and draw it
+			var chart = new google.visualization.GeoChart(document.getElementById('country_div'));
+			chart.draw(data, options);
+			
+		}	//countryResponseHandler
+		
+		function pubResponseHandler(response){
+			// get the data
+			var data = response.getDataTable();
+			
+			//set the options
+			var options = {
+					height: 1000,
+					bars: 'horizontal',
+					hAxis: {title: 'Total Media Reports'},
+					vAxis: {title: 'Publisher'},
+					backgroundColor: {
+							fill: '#ffffff',
+							fillOpacity: 0.75
+						},
+					colors: ['#0e4520', '#0e4520']
+					
+			}; //options
+			
+			//create the chart and draw it
+			var chart = new google.visualization.BarChart(document.getElementById('pub_div'));
+			chart.draw(data, options);
+			
+		} //pubResponseHandler			
+		
+		function monthResponseHandler(response){
+			//get the data
+			var data = response.getDataTable();
+			
+			//set the options
+			var options = {
+				height: 600,
+				hAxis: {title: 'Year/Month'},
+				backgroundColor: {
+							fill: '#ffffff',
+							fillOpacity: 0.75
+						},
+				vAxis: {title: 'Average Intensity'}
+				
+			}; //options
+			
+			//create the chart and draw it
+			var chart = new google.visualization.LineChart(document.getElementById('month_div'));
+			chart.draw(data, options);
+			
+		} //monthResponseHandler
+		
+		function aprResponseHandler(response){
+			//get the data
+			var data = response.getDataTable();
+			
+			//set the options
+			var options = {
+			height: 600,
+			backgroundColor: {
+							fill: '#ffffff',
+							fillOpacity: 0.75
+						},
+			colorAxis: {colors: ['#caeace', '#0e4520']}
+			
+			}; //options
+			
+			//creat the chart and draw it
+			var chart = new google.visualization.GeoChart(document.getElementById('apr_div'));
+			chart.draw(data, options);
+		};
+		
+			
+			
+				
+					
+		
+</script>		
+</head>
+<style>
+	body{
+		background-image: url("images/seamless.jpg");
+		background-repeat: vertical;
+		background-size:;
+		background-color: #080909;
+	}
+</style>
+<body>
+
+<div id="wrapper">
+
+	<div id="header">
+		<div id = "menu">
+			<ul>
+				<li><a href="index.html" class="current">Home</a><li>
+				<li><a href="process.html">Process</a></li>
+				<li><a href="micro.html">Data Dive</a></li>
+				<li><a href="kepler.gl.html">Geo-Temporal</a></li>
+				<li><a href="polar_political.html">Polar Political</a></li>
+				<li><a href="conclusion.html">Conclusion</a></li>
+			</ul>
+		</div> <!-- menu -->
+	</div> <!-- header -->
+	
+	<div id ="banner">
+		<center><h1>Data Analysis:</h1></center>
+		<center><h2>Visualizations Using Google API</h2></center>
+	</div> <!-- banner -->
+	<div id="sep"></div>
+	<class id ="container">
+		<center><h1>Total Number of Media Reports</h1></center>
+		<div id="total_div" style="width: 1000px; height; 700px; margin: 0 auto;"></div>
+		<div id="sep2"></div>
+		<center><h1>Media Reports by Country</h1></center>
+		<div id="country_div" style="width: 1000px; height; 700px; margin: 0 auto;"></div>
+		<div id="sep2"></div>
+		<center><h1>Top 25 Total Media Reports by Publisher</h1></center>
+		<div id="pub_div" style="width: 1000px; height; 700px; margin: 0 auto;"></div>
+		<div id="sep2"></div>
+		<center><h1>Average Intensity 2012-2018</h1></center>
+		<div id="month_div" style="width: 1000px; height; 700px; margin: 0 auto;"></div>
+		<div id="sep2"></div>
+		<center><h1>Average Intensity April 2017</h1></center>
+		<div id="apr_div" style="width: 1000px; height; 700px; margin: 0 auto;"></div>
+		<div id="sep2"></div>
+	</div> <!-- container -->
+</div> <!-- wrapper -->
+
+</body>
+</html>
