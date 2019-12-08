@@ -99,13 +99,13 @@ menu {
 	font-weight: 400;
 	outline: none;
 	border: none;
-	background: url("images/tooplate_menu.png");
+	background: url("tooplate_menu.png");
 	
 }
 
 #menu ul li a:hover, #tooplate_menu ul .current {
 	color: #333;
-	background: url("images/tooplate_menu_hover.png") no-repeat;
+	background: url("tooplate_menu_hover.png") no-repeat;
 }
 
 #banner {
@@ -157,7 +157,7 @@ menu {
 	text-decoration: none; 
 	color: #333; 
 	font-weight: 700; 
-	background: url("images/tooplate_menu_hover.png");  
+	background: url("tooplate_menu_hover.png");  
 }
 
 #more a:hover { 
@@ -240,12 +240,12 @@ menu {
 	font-weight: 400;
 	outline: none;
 	border: none;
-	background: url("images/tooplate_menu.png");
+	background: url("tooplate_menu.png");
 }	
 
 #tool a:hover{
 	color: #333;
-	background: url("images/tooplate_menu_hover.png") no-repeat;
+	background: url("tooplate_menu_hover.png") no-repeat;
 
 
 
